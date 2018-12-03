@@ -11,7 +11,6 @@ public class PresentSpawner : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		StartCoroutine(presentSpawn());
-
 	}
 
 	IEnumerator presentSpawn() {

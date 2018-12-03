@@ -29,11 +29,15 @@ public class PresentSpawnerExtended : MonoBehaviour {
 		if(index <= 41)
 			present = string.Format("{0}Color_{1:D2}",present,index);
 		else
-			present = string.Format("{0}Pattern_{1:D2}",present,index - 41);
-		
-		Debug.Log(present);
+			present = string.Format("{0}Pattern_{1:D2}",present,index - 42);
 
-		Instantiate(Resources.Load(present),pos,Quaternion.identity);
+		var instance = Instantiate(Resources.Load(present),pos,Quaternion.identity) as GameObject;
+		var rigidBody = instance.AddComponent<Rigidbody>();
+		rigidBody.mass = 1; 
+
+		var meshCollider = instance.GetComponent<MeshCollider>();
+		meshCollider.material = (PhysicMaterial)Resources.Load("PhysicMaterials/Rubber");
+		meshCollider.convex = true;
 
 		StartCoroutine(Spawn());
 	}
