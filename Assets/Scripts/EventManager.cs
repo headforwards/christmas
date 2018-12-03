@@ -44,7 +44,7 @@ public class EventManager : MonoBehaviour
     {
         Debug.Log("start listening: " + eventName);
         UnityEvent<string> thisEvent = null;
-        if (instance.eventDictionary.TryGetValue(eventName.ToString(), out thisEvent))
+        if (instance.eventDictionary.TryGetValue(eventName, out thisEvent))
         {
             thisEvent.AddListener(listener);
         }
@@ -52,7 +52,7 @@ public class EventManager : MonoBehaviour
         {
             thisEvent = new UnityEventMessage();
             thisEvent.AddListener(listener);
-            instance.eventDictionary.Add(eventName.ToString(), thisEvent);
+            instance.eventDictionary.Add(eventName, thisEvent);
         }
     }
 
@@ -64,7 +64,7 @@ public class EventManager : MonoBehaviour
         }
 
         UnityEvent<string> thisEvent = null;
-        if (instance.eventDictionary.TryGetValue(eventName.ToString(), out thisEvent))
+        if (instance.eventDictionary.TryGetValue(eventName, out thisEvent))
         {
             thisEvent.RemoveListener(listener);
         }
@@ -73,7 +73,7 @@ public class EventManager : MonoBehaviour
     public static void TriggerEvent(string eventName, string payload)
     {
         UnityEvent<string> thisEvent = null;
-        if (instance.eventDictionary.TryGetValue(eventName.ToString(), out thisEvent))
+        if (instance.eventDictionary.TryGetValue(eventName, out thisEvent))
         {
             thisEvent.Invoke(payload);
         }
