@@ -534,6 +534,7 @@ GameObject:
   - component: {fileID: 54723039572794878}
   - component: {fileID: 136898031949127106}
   - component: {fileID: 114621726537473552}
+  - component: {fileID: 114910581509587704}
   m_Layer: 0
   m_Name: Player5
   m_TagString: Untagged
@@ -1851,7 +1852,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1449339534171546}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.2319, y: 0.049273, z: 4.4826}
+  m_LocalPosition: {x: 2, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4005244559080122}
@@ -2515,6 +2516,17 @@ MonoBehaviour:
   flipLeftRight: 0
   verticalOffset: 0
   forwardOffset: 0
+--- !u!114 &114910581509587704
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1449339534171546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 588a8ba3ca26b9e44ac63fe84100a52f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!136 &136898031949127106
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -2602,7 +2614,7 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 621e901dcf5ebaf46bce29d18f67194c, type: 2}
+  - {fileID: 2100000, guid: ab5e0bf0f83631642ab3260203010bd7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
