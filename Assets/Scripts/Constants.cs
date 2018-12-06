@@ -8,4 +8,6 @@ public class EventNames  {
 		public static string PlayerLost = "PlayerLost";
 		public static string PlayerWaving = "PlayerWaving";
 		public static string PlayerRaisedRightHand = "PlayerRaisedRightHand";
+
+		public static string DebugMessage = "DebugMessage";
 }
