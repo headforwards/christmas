@@ -5,7 +5,8 @@ using UnityEngine;
 public class ScoreController : MonoBehaviour {
 
 
-public TextMesh playerOneScore;
+	public TextMesh playerOneScore;
+	
 	void Start () {
 		
 		playerOneScore.text = "score1";

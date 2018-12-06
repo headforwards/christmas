@@ -6,7 +6,6 @@ public class KinectGestureListener : MonoBehaviour, KinectGestures.GestureListen
 
 	public void UserDetected(long userId, int userIndex)
     {
-        // as an example - detect these user specific gestures
         KinectManager manager = KinectManager.Instance;
         manager.DetectGesture(userId, KinectGestures.Gestures.RaiseRightHand);
         manager.DetectGesture(userId, KinectGestures.Gestures.Wave);
@@ -37,8 +36,6 @@ public class KinectGestureListener : MonoBehaviour, KinectGestures.GestureListen
         }
 
         EventManager.TriggerEvent(EventNames.DebugMessage,  string.Format("{0} complete", gesture));        
-        
-
 
         return true;
     }

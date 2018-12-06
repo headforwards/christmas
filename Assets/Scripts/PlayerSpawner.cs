@@ -5,39 +5,56 @@ using UnityEngine;
 
 public class PlayerSpawner : MonoBehaviour {
 
-	// Use this for initialization
+	[Tooltip("Zero based index for player")]
 	public int playerIndex;
-	bool playerSpawned;
+
+	GameObject playerObject;
+
 	void OnEnable(){
         EventManager.StartListening(EventNames.PlayerWaving, AddPlayer);
+		EventManager.StartListening(EventNames.PlayerLost, RemovePlayer);
     }
 
     void OnDisable(){
         EventManager.StopListening(EventNames.PlayerWaving, AddPlayer);
+		EventManager.StartListening(EventNames.PlayerLost, RemovePlayer);
     }
 
 	void AddPlayer(string playerId)
 	{
 		var index = Int32.Parse(playerId);
-		if(index==playerIndex && !playerSpawned)
+
+		if(index==playerIndex && playerObject == null)
 		{
-			KinectManager manager = KinectManager.Instance;
-			playerSpawned = true;
-			Instantiate(Resources.Load(string.Format("player{0}",playerId)), gameObject.transform.position, Quaternion.identity);
-			EventManager.TriggerEvent(EventNames.DebugMessage,string.Format("Add player {0}",playerId));
+			playerObject = Instantiate(
+				Resources.Load(string.Format("players/player{0}",playerId)), 
+				gameObject.transform.position, 
+				Quaternion.identity) as GameObject;
+
+			EventManager.TriggerEvent(EventNames.DebugMessage,string.Format("Added player {0}",playerId));
 			
-			manager.refreshAvatarControllers();
-			manager.RefreshAvatarUserIds();
+			RefreshAvatars();
 		}
-		
 	}
 
-	IEnumerator refreshControllers()
+	void RefreshAvatars()
 	{
-		yield return new WaitForSeconds(0.5f);
-
 		KinectManager manager = KinectManager.Instance;
 		manager.refreshAvatarControllers();
 		manager.RefreshAvatarUserIds();
+	}
+
+	void RemovePlayer(string playerId)
+	{
+		var index = Int32.Parse(playerId);
+
+		if(index==playerIndex && playerObject != null)
+		{
+			Destroy(playerObject);
+			
+			RefreshAvatars();
+
+			EventManager.TriggerEvent(EventNames.DebugMessage,string.Format("Removed player {0}",playerId));
+		}
 	}
 }
