@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class DebugMessageListener : MonoBehaviour {
 
 
-	Text debugMessage;
+	public Text debugMessage;
 
 	void Start () 
 	{

@@ -36,7 +36,9 @@ public class KinectGestureListener : MonoBehaviour, KinectGestures.GestureListen
                 break;
         }
 
-        EventManager.TriggerEvent(EventNames.DebugMessage,  string.Format("{0} complete", gesture));
+        EventManager.TriggerEvent(EventNames.DebugMessage,  string.Format("{0} complete", gesture));        
+        
+
 
         return true;
     }
