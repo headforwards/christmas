@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44619018, g: 0.49596995, b: 0.57457507, a: 1}
+  m_IndirectSpecularColor: {r: 0.44618964, g: 0.49596983, b: 0.57457477, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1739,12 +1739,12 @@ MonoBehaviour:
   sensorHeight: 1
   sensorAngle: 0
   autoHeightAngle: 0
-  computeUserMap: 1
+  computeUserMap: 3
   computeColorMap: 0
   computeInfraredMap: 0
-  displayUserMap: 0
-  displayColorMap: 0
-  displaySkeletonLines: 0
+  displayUserMap: 1
+  displayColorMap: 1
+  displaySkeletonLines: 1
   DisplayMapsWidthPercent: 20
   useMultiSourceReader: 0
   minUserDistance: 0.5
@@ -1758,7 +1758,7 @@ MonoBehaviour:
   lateUpdateAvatars: 0
   skipRemoteAvatars: 0
   smoothing: 1
-  useBoneOrientationConstraints: 0
+  useBoneOrientationConstraints: 1
   estimateJointVelocities: 0
   velocitySmoothing: 2
   allowTurnArounds: 0
@@ -9312,7 +9312,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 7daebfe5e049d7d448ae9ca6454f3b6f, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.033
+  m_Volume: 0.727
   m_Pitch: 1
   Loop: 1
   Mute: 0
