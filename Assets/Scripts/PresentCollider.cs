@@ -19,6 +19,7 @@ public class PresentCollider : MonoBehaviour {
            CollectPresent(present);
 
            EventManager.TriggerEvent(EventNames.UpdateScore, gameObject.name);
+           EventManager.TriggerEvent(EventNames.DebugMessage, string.Format("{0} collected a present", gameObject.name));
         }
     }     
 
