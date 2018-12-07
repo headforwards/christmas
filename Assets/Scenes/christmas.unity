@@ -8728,6 +8728,21 @@ Prefab:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114351932787748126, guid: 0f0fbcd613fc44a51914eb2d4f1c8f32,
+        type: 2}
+      propertyPath: m_text
+      value: Player Name
+      objectReference: {fileID: 0}
+    - target: {fileID: 114351932787748126, guid: 0f0fbcd613fc44a51914eb2d4f1c8f32,
+        type: 2}
+      propertyPath: m_textInfo.characterCount
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 114351932787748126, guid: 0f0fbcd613fc44a51914eb2d4f1c8f32,
+        type: 2}
+      propertyPath: m_textInfo.wordCount
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f0fbcd613fc44a51914eb2d4f1c8f32, type: 2}
   m_IsPrefabAsset: 0

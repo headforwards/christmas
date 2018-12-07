@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4074557554508646}
   - component: {fileID: 114008080865841324}
   m_Layer: 0
-  m_Name: Player6_Name
+  m_Name: Player0_Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -133,7 +133,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: Player 6
+  m_text: Player 1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: f629c6e43dba4bf38cb74d8860150664, type: 2}
@@ -142,15 +142,16 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278255611
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 1
   m_fontColorGradient:
-    topLeft: {r: 0.8584906, g: 0.8584906, b: 0.8584906, a: 1}
-    topRight: {r: 0.38679248, g: 0.38679248, b: 0.38679248, a: 1}
-    bottomLeft: {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 1}
-    bottomRight: {r: 0, g: 0, b: 0, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
+    topLeft: {r: 0.9433962, g: 0, b: 0, a: 1}
+    topRight: {r: 1, g: 0.5165677, b: 0.10849059, a: 1}
+    bottomLeft: {r: 0.8962264, g: 0, b: 0.8010598, a: 1}
+    bottomRight: {r: 0, g: 0.16062586, b: 0.990566, a: 1}
+  m_fontColorGradientPreset: {fileID: 11400000, guid: 69a525efa7e6472eab268f6ea605f06e,
+    type: 2}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_overrideHtmlColors: 0
@@ -209,11 +210,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 23149551001506386}
