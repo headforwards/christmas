@@ -16,10 +16,10 @@ public class PresentCollider : MonoBehaviour {
         // when collide destroy the present.
         if (present.name.ToLower().StartsWith("present"))
         {
-           CollectPresent(present);
-
            EventManager.TriggerEvent(EventNames.UpdateScore, gameObject.name);
            EventManager.TriggerEvent(EventNames.DebugMessage, string.Format("{0} collected a present", gameObject.name));
+           CollectPresent(present);
+
         }
     }     
 
@@ -65,17 +65,22 @@ public class PresentCollider : MonoBehaviour {
 
 	IEnumerator ScaleOverTime(GameObject present)
      {
-         Vector3 originalScale = present.transform.localScale;
-         Vector3 destinationScale = new Vector3(0.01f, 0.01f, 0.01f);
-         
-         float currentTime = 0.0f;
-         
-         do
+         if(present != null)
          {
-             present.transform.localScale = Vector3.Lerp(originalScale, destinationScale, currentTime / fadeOutTime);
-             currentTime += Time.deltaTime;
-             yield return null;
-         } while (currentTime <= fadeOutTime);
+            Vector3 originalScale = present.transform.localScale;
+            Vector3 destinationScale = new Vector3(0.01f, 0.01f, 0.01f);
+            
+            float currentTime = 0.0f;
+            
+            do
+            {
+                if(present == null)
+                    break;
+                present.transform.localScale = Vector3.Lerp(originalScale, destinationScale, currentTime / fadeOutTime);
+                currentTime += Time.deltaTime;
+                yield return null;
+            } while (currentTime <= fadeOutTime);
+         }
      } 
 	
 }

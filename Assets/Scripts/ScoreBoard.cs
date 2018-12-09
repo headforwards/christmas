@@ -2,30 +2,95 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
+using System.Text;
+
 public class ScoreBoard : MonoBehaviour {
+
+	class Player 
+	{
+		public Player(int index)
+		{
+			Index = index;
+		}
+		public int Score { get; set; }
+		public int Index { get; set;}
+
+		public override string ToString()
+		{
+			return string.Format("Player {0}: {1}", Index + 1, Score);
+		}
+	}
+
+	List<Player> players = new List<Player>();
 
 	public Text ScoreText; 
 
-	// Use this for initialization
 	void Start () {
 		UpdateScoreText("Waiting for players");
 	}
-	
-	void playerFound(string player)
+
+	int PlayerIndex(string kinectPlayerIndex)
 	{
-		UpdateScoreText(string.Format("found: {0}",player));
+		int playerIndex = 0;
+		int.TryParse(kinectPlayerIndex, out playerIndex);
+		return playerIndex;
+	}
+	
+	void playerWaving(string player)
+	{
+		var playerIndex = PlayerIndex(player);
+
+		if(!players.Any(p=>p.Index == playerIndex))
+		{
+			players.Add(new Player(playerIndex));
+			UpdateScores();
+		}
 	}
 
 	void playerLost(string player)
 	{
-		UpdateScoreText(string.Format("lost: {0}",player));
+		var playerIndex = PlayerIndex(player);
 
+		players.RemoveAll(p=>p.Index == playerIndex);
+		UpdateScores();
 	}
 
-	void playerScored(string player)
+	void playerScored(string playerName)
 	{
-		UpdateScoreText(string.Format("scored: {0}",player));
+		var playerId = playerName.ToLower().Replace("player","");
 
+		int idx = 0;
+		
+		if(!int.TryParse(playerId[0].ToString(), out idx))
+			return;
+
+		var player = players.FirstOrDefault(p=>p.Index == idx);
+
+		if(player != null)
+			player.Score++;
+
+		UpdateScores();	
+	}
+
+	void UpdateScores()
+	{
+		if(!players.Any())
+		{
+			UpdateScoreText("No players :(");
+			return;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		foreach(var player in players
+			.OrderByDescending(p=>p.Score)
+			.ThenBy(p=>p.Index))
+		{
+			sb.AppendLine(player.ToString());
+		}
+
+		UpdateScoreText(sb.ToString());
 	}
 
 	void UpdateScoreText(string message)
@@ -35,13 +100,13 @@ public class ScoreBoard : MonoBehaviour {
 	}
 
 	void OnEnable(){
-        EventManager.StartListening(EventNames.PlayerFound, playerFound);
+        EventManager.StartListening(EventNames.PlayerWaving, playerWaving);
         EventManager.StartListening(EventNames.PlayerLost, playerLost);
         EventManager.StartListening(EventNames.UpdateScore, playerScored);
     }
 
     void OnDisable(){
-        EventManager.StopListening(EventNames.PlayerFound, playerFound);
+        EventManager.StopListening(EventNames.PlayerFound, playerWaving);
         EventManager.StopListening(EventNames.PlayerLost, playerLost);
         EventManager.StartListening(EventNames.UpdateScore, playerScored);
     }
