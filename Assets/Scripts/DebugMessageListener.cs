@@ -3,29 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DebugMessageListener : MonoBehaviour {
+public class DebugMessageListener : MonoBehaviour
+{
+    public Text debugMessage;
 
+    void Start()
+    {
+        OnDebugMessage("Ready");
+    }
 
-	public Text debugMessage;
+    void OnDebugMessage(string message)
+    {
+        if (debugMessage != null)
+        {
+            debugMessage.text = message;
+        }
+    }
 
-	void Start () 
-	{
-		OnDebugMessage("Ready");
-	}
-
-	void OnDebugMessage(string message)
-	{
-		if(debugMessage != null)
-		{
-			debugMessage.text = message;
-		}
-	}
-
-	void OnEnable(){
+    void OnEnable()
+    {
         EventManager.StartListening(EventNames.DebugMessage, OnDebugMessage);
     }
 
-    void OnDisable(){
+    void OnDisable()
+    {
         EventManager.StopListening(EventNames.DebugMessage, OnDebugMessage);
     }
 }

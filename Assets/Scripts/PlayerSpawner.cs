@@ -3,58 +3,74 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSpawner : MonoBehaviour {
+public class PlayerSpawner : MonoBehaviour
+{
 
-	[Tooltip("Zero based index for player")]
-	public int playerIndex;
+    Dictionary<int, GameObject> players = new Dictionary<int, GameObject>();
 
-	GameObject playerObject;
-
-	void OnEnable(){
+    void OnEnable()
+    {
         EventManager.StartListening(EventNames.PlayerWaving, AddPlayer);
-		EventManager.StartListening(EventNames.PlayerLost, RemovePlayer);
+        EventManager.StartListening(EventNames.PlayerLost, RemovePlayer);
     }
 
-    void OnDisable(){
+    void OnDisable()
+    {
         EventManager.StopListening(EventNames.PlayerWaving, AddPlayer);
-		EventManager.StartListening(EventNames.PlayerLost, RemovePlayer);
+        EventManager.StartListening(EventNames.PlayerLost, RemovePlayer);
     }
 
-	void AddPlayer(string playerId)
-	{
-		var index = Int32.Parse(playerId);
+    void AddPlayer(string playerId)
+    {
+        var index = Int32.Parse(playerId);
 
-		if(index==playerIndex && playerObject == null)
-		{
-			playerObject = Instantiate(
-				Resources.Load(string.Format("players/player{0}",playerId)), 
-				gameObject.transform.position, 
-				Quaternion.identity) as GameObject;
+        if (!players.ContainsKey(index))
+        {
+            players.Add(index, null);
 
-			EventManager.TriggerEvent(EventNames.DebugMessage,string.Format("Added player {0}",playerId));
-			
-			RefreshAvatars();
-		}
-	}
+            KinectManager manager = KinectManager.Instance;
 
-	void RefreshAvatars()
-	{
-		KinectManager manager = KinectManager.Instance;
-		manager.refreshAvatarControllers();
-		manager.RefreshAvatarUserIds();
-	}
+            long id = manager.GetUserIdByIndex(index);
 
-	void RemovePlayer(string playerId)
-	{
-		var index = Int32.Parse(playerId);
+            var pos = manager.GetUserPosition(id);
 
-		if(index==playerIndex && playerObject != null)
-		{
-			Destroy(playerObject);
-			
-			RefreshAvatars();
+            var spawnPosition = gameObject.transform.position;
 
-			EventManager.TriggerEvent(EventNames.DebugMessage,string.Format("Removed player {0}",playerId));
-		}
-	}
+            spawnPosition.x = pos.x * 2;
+
+            var playerObject = Instantiate(
+                   Resources.Load(string.Format("players/player{0}", playerId)),
+                   spawnPosition,
+                   Quaternion.identity) as GameObject;
+
+            players[index] = playerObject;
+
+            EventManager.TriggerEvent(EventNames.DebugMessage, string.Format("Added player {0}", playerId));
+
+            RefreshAvatars();
+        }
+    }
+
+    void RefreshAvatars()
+    {
+        KinectManager manager = KinectManager.Instance;
+        manager.refreshAvatarControllers();
+        manager.RefreshAvatarUserIds();
+    }
+
+    void RemovePlayer(string playerId)
+    {
+        var index = Int32.Parse(playerId);
+
+        if (players.ContainsKey(index))
+        {
+            Destroy(players[index]);
+
+            players.Remove(index);
+
+            RefreshAvatars();
+
+            EventManager.TriggerEvent(EventNames.DebugMessage, string.Format("Removed player {0}", playerId));
+        }
+    }
 }

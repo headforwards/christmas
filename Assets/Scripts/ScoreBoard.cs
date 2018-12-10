@@ -5,107 +5,110 @@ using UnityEngine.UI;
 using System.Linq;
 using System.Text;
 
-public class ScoreBoard : MonoBehaviour {
+public class ScoreBoard : MonoBehaviour
+{
 
-	class Player 
-	{
-		public Player(int index)
-		{
-			Index = index;
-		}
-		public int Score { get; set; }
-		public int Index { get; set;}
+    class Player
+    {
+        public Player(int index)
+        {
+            Index = index;
+        }
+        public int Score { get; set; }
+        public int Index { get; set; }
 
-		public override string ToString()
-		{
-			return string.Format("Player {0}: {1}", Index + 1, Score);
-		}
-	}
+        public override string ToString()
+        {
+            return string.Format("Player {0}: {1}", Index + 1, Score);
+        }
+    }
 
-	List<Player> players = new List<Player>();
+    List<Player> players = new List<Player>();
 
-	public Text ScoreText; 
+    public Text ScoreText;
 
-	void Start () {
-		UpdateScoreText("Waiting for players");
-	}
+    void Start()
+    {
+        UpdateScoreText("Waiting for players");
+    }
 
-	int PlayerIndex(string kinectPlayerIndex)
-	{
-		int playerIndex = 0;
-		int.TryParse(kinectPlayerIndex, out playerIndex);
-		return playerIndex;
-	}
-	
-	void playerWaving(string player)
-	{
-		var playerIndex = PlayerIndex(player);
+    int PlayerIndex(string kinectPlayerIndex)
+    {
+        int playerIndex = 0;
+        int.TryParse(kinectPlayerIndex, out playerIndex);
+        return playerIndex;
+    }
 
-		if(!players.Any(p=>p.Index == playerIndex))
-		{
-			players.Add(new Player(playerIndex));
-			UpdateScores();
-		}
-	}
+    void playerWaving(string player)
+    {
+        var playerIndex = PlayerIndex(player);
 
-	void playerLost(string player)
-	{
-		var playerIndex = PlayerIndex(player);
+        if (!players.Any(p => p.Index == playerIndex))
+        {
+            players.Add(new Player(playerIndex));
+            UpdateScores();
+        }
+    }
 
-		players.RemoveAll(p=>p.Index == playerIndex);
-		UpdateScores();
-	}
+    void playerLost(string player)
+    {
+        var playerIndex = PlayerIndex(player);
 
-	void playerScored(string playerName)
-	{
-		var playerId = playerName.ToLower().Replace("player","");
+        players.RemoveAll(p => p.Index == playerIndex);
+        UpdateScores();
+    }
 
-		int idx = 0;
-		
-		if(!int.TryParse(playerId[0].ToString(), out idx))
-			return;
+    void playerScored(string playerName)
+    {
+        var playerId = playerName.ToLower().Replace("player", "");
 
-		var player = players.FirstOrDefault(p=>p.Index == idx);
+        int idx = 0;
 
-		if(player != null)
-			player.Score++;
+        if (!int.TryParse(playerId[0].ToString(), out idx))
+            return;
 
-		UpdateScores();	
-	}
+        var player = players.FirstOrDefault(p => p.Index == idx);
 
-	void UpdateScores()
-	{
-		if(!players.Any())
-		{
-			UpdateScoreText("No players :(");
-			return;
-		}
+        if (player != null)
+            player.Score++;
 
-		StringBuilder sb = new StringBuilder();
+        UpdateScores();
+    }
 
-		foreach(var player in players
-			.OrderByDescending(p=>p.Score)
-			.ThenBy(p=>p.Index))
-		{
-			sb.AppendLine(player.ToString());
-		}
+    void UpdateScores()
+    {
+        if (!players.Any())
+        {
+            UpdateScoreText("No players :(");
+            return;
+        }
 
-		UpdateScoreText(sb.ToString());
-	}
+        StringBuilder sb = new StringBuilder();
 
-	void UpdateScoreText(string message)
-	{
-		if(ScoreText != null)
-			ScoreText.text = message;
-	}
+        foreach (var player in players
+            .OrderBy(p => p.Index))
+        {
+            sb.AppendLine(player.ToString());
+        }
 
-	void OnEnable(){
+        UpdateScoreText(sb.ToString());
+    }
+
+    void UpdateScoreText(string message)
+    {
+        if (ScoreText != null)
+            ScoreText.text = message;
+    }
+
+    void OnEnable()
+    {
         EventManager.StartListening(EventNames.PlayerWaving, playerWaving);
         EventManager.StartListening(EventNames.PlayerLost, playerLost);
         EventManager.StartListening(EventNames.UpdateScore, playerScored);
     }
 
-    void OnDisable(){
+    void OnDisable()
+    {
         EventManager.StopListening(EventNames.PlayerFound, playerWaving);
         EventManager.StopListening(EventNames.PlayerLost, playerLost);
         EventManager.StartListening(EventNames.UpdateScore, playerScored);
