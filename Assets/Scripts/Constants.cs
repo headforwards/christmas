@@ -3,23 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EventNames  {
-		public static string UpdateScore = "UpdateScore";
-		public static string PlayerFound = "PlayerFound";
-		public static string PlayerLost = "PlayerLost";
-		public static string PlayerWaving = "PlayerWaving";
-		public static string PlayerRaisedRightHand = "PlayerRaisedRightHand";
+		public const string UpdateScore = "UpdateScore";
+		public const string PlayerFound = "PlayerFound";
+		public const string PlayerLost = "PlayerLost";
+		public const string PlayerWaving = "PlayerWaving";
+		public const string PlayerRaisedRightHand = "PlayerRaisedRightHand";
 
-		public static string DebugMessage = "DebugMessage";
+		public const string DebugMessage = "DebugMessage";
+
+		public const string GameStateChanged = "GameStateChanged";
 }
 
 public class GameStates {
-	public static string WaitingForPlayers = "WaitingForPlayers";
-	public static string PlayerDetected = "PlayerDetected";
-	public static string PlayerJoined = "PlayerJoined";
+	public const string WaitingForPlayers = "WaitingForPlayers";
+	public const string PlayerJoined = "PlayerJoined";
 
-	public static string InProgress = "InProgress";
+	public const string InProgress = "InProgress";
 
-	public static string GameFinished = "GameFinished";
-
-	
+	public const string GameFinished = "GameFinished";
 }

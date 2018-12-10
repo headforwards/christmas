@@ -46,6 +46,7 @@ public class PlayerSpawner : MonoBehaviour
             players[index] = playerObject;
 
             EventManager.TriggerEvent(EventNames.DebugMessage, string.Format("Added player {0}", playerId));
+            EventManager.TriggerEvent(EventNames.GameStateChanged, GameStates.PlayerJoined);
 
             RefreshAvatars();
         }

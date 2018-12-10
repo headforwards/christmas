@@ -60,6 +60,9 @@ public class ScoreBoard : MonoBehaviour
 
     void playerScored(string playerName)
     {
+        if(!inProgress)
+            return;
+            
         var playerId = playerName.ToLower().Replace("player", "");
 
         int idx = 0;
@@ -100,17 +103,26 @@ public class ScoreBoard : MonoBehaviour
             ScoreText.text = message;
     }
 
+
+    bool inProgress = false;
+    void gameStateChanged(string gameState)
+    {
+        inProgress = gameState == GameStates.InProgress;
+    }
+
     void OnEnable()
     {
         EventManager.StartListening(EventNames.PlayerWaving, playerWaving);
         EventManager.StartListening(EventNames.PlayerLost, playerLost);
         EventManager.StartListening(EventNames.UpdateScore, playerScored);
+        EventManager.StartListening(EventNames.GameStateChanged, gameStateChanged);
     }
 
     void OnDisable()
     {
         EventManager.StopListening(EventNames.PlayerFound, playerWaving);
         EventManager.StopListening(EventNames.PlayerLost, playerLost);
-        EventManager.StartListening(EventNames.UpdateScore, playerScored);
+        EventManager.StopListening(EventNames.UpdateScore, playerScored);
+        EventManager.StopListening(EventNames.GameStateChanged, gameStateChanged);
     }
 }
