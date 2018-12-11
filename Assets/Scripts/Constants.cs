@@ -7,7 +7,7 @@ public class EventNames  {
 		public const string PlayerFound = "PlayerFound";
 		public const string PlayerLost = "PlayerLost";
 		public const string PlayerWaving = "PlayerWaving";
-		public const string PlayerRaisedRightHand = "PlayerRaisedRightHand";
+		public const string PlayerReady = "PlayerReady";
 
 		public const string DebugMessage = "DebugMessage";
 

@@ -8,7 +8,7 @@ public class KinectGestureListener : MonoBehaviour, KinectGestures.GestureListen
     public void UserDetected(long userId, int userIndex)
     {
         KinectManager manager = KinectManager.Instance;
-        manager.DetectGesture(userId, KinectGestures.Gestures.RaiseRightHand);
+        manager.DetectGesture(userId, KinectGestures.Gestures.Tpose);
         manager.DetectGesture(userId, KinectGestures.Gestures.Wave);
 
         EventManager.TriggerEvent(EventNames.PlayerFound, userIndex.ToString());
@@ -28,8 +28,8 @@ public class KinectGestureListener : MonoBehaviour, KinectGestures.GestureListen
     {
         switch (gesture)
         {
-            case KinectGestures.Gestures.RaiseRightHand:
-                EventManager.TriggerEvent(EventNames.PlayerRaisedRightHand, userIndex.ToString());
+            case KinectGestures.Gestures.Tpose:
+                EventManager.TriggerEvent(EventNames.PlayerReady, userIndex.ToString());
                 break;
             case KinectGestures.Gestures.Wave:
                 EventManager.TriggerEvent(EventNames.PlayerWaving, userIndex.ToString());
