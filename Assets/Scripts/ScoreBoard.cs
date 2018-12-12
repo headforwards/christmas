@@ -32,6 +32,9 @@ public class ScoreBoard : MonoBehaviour
 
     public TMP_Text HighScore;
 
+    public TMP_Text HighestScore;
+
+
     private int highScore;
 
     void Start()
@@ -113,15 +116,25 @@ public class ScoreBoard : MonoBehaviour
             ScoreText.text = message;
         if (ScoreSummary != null)
             ScoreSummary.text = message;
+
         if (TeamScore != null)
         {
             var score = players.Sum(p => p.Score);
+
             TeamScore.text = string.Format("Your Team Scored: {0}", score);
 
-            highScore = System.Math.Max(score, highScore);
-
-            if (HighScore != null)
+            if (score > highScore)
+            {
+                HighestScore.text = "Your Team Got The High Score!!!";
+                HighScore.text = string.Empty;
+            }
+            else
+            {
+                HighestScore.text = string.Empty;
                 HighScore.text = string.Format("Team High Score Is: {0}", highScore);
+            }
+
+            highScore = System.Math.Max(score, highScore);
         }
     }
 
@@ -134,7 +147,7 @@ public class ScoreBoard : MonoBehaviour
         {
             players.Clear();
         }
-		UpdateScores();
+        UpdateScores();
     }
 
     void OnEnable()
