@@ -17,12 +17,16 @@ public class GameManager : MonoBehaviour
     bool gameInProgress;
 
     List<int> players = new List<int>();
-    List<int> playersWithArmsRaised = new List<int>();
+    List<int> playersReady = new List<int>();
     // Use this for initialization
 
     public int gameLength = 30;
 
+    public float displayGameFinished = 20.0f;
+
     public Text timer;
+    
+    int requestedGameLength;
 
     IEnumerator countDownTimer()
     {
@@ -50,6 +54,8 @@ public class GameManager : MonoBehaviour
         presentSpawner = GameObject.FindObjectOfType(typeof(PresentSpawner)) as PresentSpawner;
 
         EventManager.TriggerEvent(EventNames.GameStateChanged, GameStates.WaitingForPlayers);
+
+        requestedGameLength = gameLength;
 
         // for (int i = 0; i < 6; i++)
         // {
@@ -110,9 +116,15 @@ public class GameManager : MonoBehaviour
                 gameInProgress = false;
                 inprogress.SetActive(false);
                 gameover.SetActive(true);
-                presentSpawner.minInterval = 10.0f;
-                presentSpawner.maxInterval = 10.0f;
-                StartCoroutine(TriggerEvent(EventNames.GameStateChanged, GameStates.WaitingForPlayers, 20.0f));
+                presentSpawner.minInterval = displayGameFinished + 10.0f;
+                presentSpawner.maxInterval = displayGameFinished + 10.0f;
+
+                playersReady.Clear();
+                players.Clear();
+
+                gameLength = requestedGameLength;
+
+                StartCoroutine(TriggerEvent(EventNames.GameStateChanged, GameStates.WaitingForPlayers, displayGameFinished));
                 break;
         }
     }
@@ -121,12 +133,12 @@ public class GameManager : MonoBehaviour
     {
         if (gameInProgress) return;
         int id = int.Parse(playerId);
-        if (!playersWithArmsRaised.Contains(id))
+        if (!playersReady.Contains(id))
         {
-            playersWithArmsRaised.Add(id);
+            playersReady.Add(id);
         }
 
-        if (players.All(m => playersWithArmsRaised.Contains(m)))
+        if (players.All(m => playersReady.Contains(m)))
         {
             EventManager.TriggerEvent(EventNames.GameStateChanged, GameStates.InProgress);
         }
@@ -147,7 +159,7 @@ public class GameManager : MonoBehaviour
         if (players.Contains(id))
         {
             players.Remove(id);
-            playersWithArmsRaised.Remove(id);
+            playersReady.Remove(id);
         }
     }
 

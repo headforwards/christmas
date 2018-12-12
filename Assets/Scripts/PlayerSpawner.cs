@@ -12,12 +12,28 @@ public class PlayerSpawner : MonoBehaviour
     {
         EventManager.StartListening(EventNames.PlayerWaving, AddPlayer);
         EventManager.StartListening(EventNames.PlayerLost, RemovePlayer);
+        EventManager.StartListening(EventNames.GameStateChanged, gameStateChanged);
     }
 
     void OnDisable()
     {
         EventManager.StopListening(EventNames.PlayerWaving, AddPlayer);
         EventManager.StartListening(EventNames.PlayerLost, RemovePlayer);
+        EventManager.StartListening(EventNames.GameStateChanged, gameStateChanged);
+    }
+
+    void gameStateChanged(string gameState)
+    {
+
+        if (gameState == GameStates.GameFinished)
+		{
+			foreach(var player in players.Values){
+				Destroy(player);
+			}
+			
+			players.Clear();
+		}
+
     }
 
     void AddPlayer(string playerId)

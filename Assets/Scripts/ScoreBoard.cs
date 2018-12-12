@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using System.Text;
+using TMPro;
 
 public class ScoreBoard : MonoBehaviour
 {
@@ -26,6 +27,12 @@ public class ScoreBoard : MonoBehaviour
     List<Player> players = new List<Player>();
 
     public Text ScoreText;
+    public TMP_Text ScoreSummary;
+    public TMP_Text TeamScore;
+
+    public TMP_Text HighScore;
+
+    private int highScore;
 
     void Start()
     {
@@ -60,9 +67,9 @@ public class ScoreBoard : MonoBehaviour
 
     void playerScored(string playerName)
     {
-        if(!inProgress)
+        if (!inProgress)
             return;
-            
+
         var playerId = playerName.ToLower().Replace("player", "");
 
         int idx = 0;
@@ -99,8 +106,23 @@ public class ScoreBoard : MonoBehaviour
 
     void UpdateScoreText(string message)
     {
+        if (!inProgress)
+            return;
+
         if (ScoreText != null)
             ScoreText.text = message;
+        if (ScoreSummary != null)
+            ScoreSummary.text = message;
+        if (TeamScore != null)
+        {
+            var score = players.Sum(p => p.Score);
+            TeamScore.text = string.Format("Your Team Scored: {0}", score);
+
+            highScore = System.Math.Max(score, highScore);
+
+            if (HighScore != null)
+                HighScore.text = string.Format("Team High Score Is: {0}", highScore);
+        }
     }
 
 
@@ -108,6 +130,11 @@ public class ScoreBoard : MonoBehaviour
     void gameStateChanged(string gameState)
     {
         inProgress = gameState == GameStates.InProgress;
+        if (gameState == GameStates.GameFinished)
+        {
+            players.Clear();
+        }
+		UpdateScores();
     }
 
     void OnEnable()
