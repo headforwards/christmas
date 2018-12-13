@@ -12,6 +12,9 @@ public class EventNames  {
 		public const string DebugMessage = "DebugMessage";
 
 		public const string GameStateChanged = "GameStateChanged";
+
+		public const string StartPresents = "StartPresents";
+		public const string StopPresents = "StopPresents";
 }
 
 public class GameStates {
