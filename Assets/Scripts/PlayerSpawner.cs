@@ -55,7 +55,7 @@ public class PlayerSpawner : MonoBehaviour
             spawnPosition.x = pos.x * 2;
 
             var playerObject = Instantiate(
-                   Resources.Load(string.Format("players/player{0}", playerId)),
+                   Resources.Load(string.Format("elves/player{0}", playerId)),
                    spawnPosition,
                    Quaternion.identity) as GameObject;
 

@@ -38,9 +38,9 @@ public class GameManager : MonoBehaviour
 
         requestedGameLength = gameLength;
 
-        StartCoroutine(TriggerEvent(EventNames.GameStateChanged, GameStates.PlayerJoined, 2.0f));
+        // StartCoroutine(TriggerEvent(EventNames.GameStateChanged, GameStates.PlayerJoined, 2.0f));
 
-        StartCoroutine(TriggerEvent(EventNames.GameStateChanged, GameStates.InProgress, 4.0f));
+        // StartCoroutine(TriggerEvent(EventNames.GameStateChanged, GameStates.InProgress, 4.0f));
     }
 
     IEnumerator TriggerEvent(string eventName, string payload, float wait)
@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
 
         if (endCountDown != null)
         {
-            endCountDown.text = gameLength <= 3 ? (gameLength +1).ToString() : "";
+            endCountDown.text = gameLength <= 4 ? (gameLength +1).ToString() : "";
         }
     }
     IEnumerator gameTimer()
