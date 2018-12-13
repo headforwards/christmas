@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,23 +11,18 @@ public class GameManager : MonoBehaviour
     GameObject welcome;
     GameObject instructions;
     GameObject gameover;
-
     GameObject inprogress;
     PresentSpawner presentSpawner;
 
+    int requestedGameLength;
     bool gameInProgress;
-
     List<int> players = new List<int>();
     List<int> playersReady = new List<int>();
-    // Use this for initialization
 
     public int gameLength = 30;
-
     public float displayGameFinished = 20.0f;
-
-    public Text timer;
+    public TMP_Text timer;
     
-    int requestedGameLength;
 
     IEnumerator countDownTimer()
     {
@@ -56,22 +52,6 @@ public class GameManager : MonoBehaviour
         EventManager.TriggerEvent(EventNames.GameStateChanged, GameStates.WaitingForPlayers);
 
         requestedGameLength = gameLength;
-
-        // for (int i = 0; i < 6; i++)
-        // {
-        //     StartCoroutine(TriggerEvent(EventNames.PlayerWaving, i.ToString(), 2.0f));
-        //     if (i % 2 == 0)
-        //         StartCoroutine(TriggerEvent(EventNames.PlayerLost, i.ToString(), 2.0f * i));
-        // }
-
-        // StartCoroutine(TriggerEvent(EventNames.PlayerWaving, "0", 2.0f));
-
-        float delay = 4.0f;
-
-        // StartCoroutine(TriggerEvent(EventNames.GameStateChanged, GameStates.WaitingForPlayers, delay));
-        // StartCoroutine(TriggerEvent(EventNames.GameStateChanged, GameStates.PlayerJoined, delay += 2.0f));
-        // StartCoroutine(TriggerEvent(EventNames.GameStateChanged, GameStates.InProgress, delay += 2.0f));
-        // StartCoroutine(TriggerEvent(EventNames.GameStateChanged, GameStates.GameFinished, delay += 4.0f));
     }
 
     IEnumerator TriggerEvent(string eventName, string payload, float wait)
@@ -96,7 +76,6 @@ public class GameManager : MonoBehaviour
                 presentSpawner.maxInterval = 2.0f;
                 break;
             case GameStates.PlayerJoined:
-                Debug.Log(gameInProgress);
                 if (!gameInProgress)
                 {
                     welcome.SetActive(false);
@@ -116,8 +95,8 @@ public class GameManager : MonoBehaviour
                 gameInProgress = false;
                 inprogress.SetActive(false);
                 gameover.SetActive(true);
-                presentSpawner.minInterval = displayGameFinished + 10.0f;
-                presentSpawner.maxInterval = displayGameFinished + 10.0f;
+                presentSpawner.minInterval = displayGameFinished;
+                presentSpawner.maxInterval = displayGameFinished;
 
                 playersReady.Clear();
                 players.Clear();
@@ -133,7 +112,7 @@ public class GameManager : MonoBehaviour
     {
         if (gameInProgress) return;
         int id = int.Parse(playerId);
-        if (!playersReady.Contains(id))
+        if (players.Contains(id) && !playersReady.Contains(id))
         {
             playersReady.Add(id);
         }

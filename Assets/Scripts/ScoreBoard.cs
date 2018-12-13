@@ -24,17 +24,13 @@ public class ScoreBoard : MonoBehaviour
         }
     }
 
-    List<Player> players = new List<Player>();
-
-    public Text ScoreText;
-    public TMP_Text ScoreSummary;
+    public TMP_Text ScoreBoardText;
+    public TMP_Text ScorePlayerSummary;
     public TMP_Text TeamScore;
+    public TMP_Text CurrentHighScore;
+    public TMP_Text NewHighScore;
 
-    public TMP_Text HighScore;
-
-    public TMP_Text HighestScore;
-
-
+    List<Player> players = new List<Player>();
     private int highScore;
 
     void Start()
@@ -112,10 +108,10 @@ public class ScoreBoard : MonoBehaviour
         if (!inProgress)
             return;
 
-        if (ScoreText != null)
-            ScoreText.text = message;
-        if (ScoreSummary != null)
-            ScoreSummary.text = message;
+        if (ScoreBoardText != null)
+            ScoreBoardText.text = message;
+        if (ScorePlayerSummary != null)
+            ScorePlayerSummary.text = message;
 
         if (TeamScore != null)
         {
@@ -125,13 +121,13 @@ public class ScoreBoard : MonoBehaviour
 
             if (score > highScore)
             {
-                HighestScore.text = "Your Team Got The High Score!!!";
-                HighScore.text = string.Empty;
+                NewHighScore.text = "Your Team Got The High Score!!!";
+                CurrentHighScore.text = string.Empty;
             }
             else
             {
-                HighestScore.text = string.Empty;
-                HighScore.text = string.Format("Team High Score Is: {0}", highScore);
+                NewHighScore.text = string.Empty;
+                CurrentHighScore.text = string.Format("Current Highest Score Is: {0}", highScore);
             }
 
             highScore = System.Math.Max(score, highScore);
