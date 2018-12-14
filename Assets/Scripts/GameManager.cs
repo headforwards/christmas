@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     GameObject instructions;
     GameObject gameover;
     GameObject inprogress;
+
+
     PresentSpawner presentSpawner;
 
     int requestedGameLength;
@@ -22,6 +24,7 @@ public class GameManager : MonoBehaviour
     public int gameLength = 30;
     public float displayGameFinished = 20.0f;
     public TMP_Text timer;
+    public TMP_Text scoreboard;
 
     public TMP_Text startCountDown;
     public TMP_Text endCountDown;
@@ -61,7 +64,7 @@ public class GameManager : MonoBehaviour
 
         if (endCountDown != null)
         {
-            endCountDown.text = gameLength <= 4 ? (gameLength +1).ToString() : "";
+            endCountDown.text = gameLength <= 4 ? (gameLength + 1).ToString() : "";
         }
     }
     IEnumerator gameTimer()
@@ -120,18 +123,26 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    string currentGameState;
 
     void gameStateChanged(string gameState)
     {
+        KinectManager manager = KinectManager.Instance;
+        currentGameState = gameState;
 
         switch (gameState)
         {
             case GameStates.WaitingForPlayers:
+                manager.displayColorMap = true;
+                manager.displayUserMap = true;
+                manager.displaySkeletonLines = true;
                 gameInProgress = false;
                 gameover.SetActive(false);
                 welcome.SetActive(true);
                 inprogress.SetActive(false);
                 instructions.SetActive(false);
+                timer.enabled = false;
+                scoreboard.enabled = false;
                 break;
             case GameStates.PlayerJoined:
                 if (!gameInProgress)
@@ -141,6 +152,11 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case GameStates.InProgress:
+                manager.displayColorMap = false;
+                manager.displayUserMap = false;
+                manager.displaySkeletonLines = false;
+                timer.enabled = true;
+                scoreboard.enabled = true;
                 gameInProgress = true;
                 instructions.SetActive(false);
                 inprogress.SetActive(true);
@@ -149,6 +165,8 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(startGame());
                 break;
             case GameStates.GameFinished:
+                timer.enabled = false;
+                scoreboard.enabled = false;
                 EventManager.TriggerEvent(EventNames.StopPresents, "");
                 gameInProgress = false;
                 inprogress.SetActive(false);
@@ -166,7 +184,8 @@ public class GameManager : MonoBehaviour
 
     void playerReady(string playerId)
     {
-        if (gameInProgress) return;
+        if (gameInProgress ||  currentGameState == GameStates.GameFinished) return;
+
         int id = int.Parse(playerId);
         if (players.Contains(id) && !playersReady.Contains(id))
         {
@@ -181,6 +200,8 @@ public class GameManager : MonoBehaviour
 
     void playerWaving(string playerId)
     {
+        if (gameInProgress ||  currentGameState == GameStates.GameFinished) return;
+
         int id = int.Parse(playerId);
         if (!players.Contains(id))
         {
