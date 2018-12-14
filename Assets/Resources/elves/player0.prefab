@@ -34,7 +34,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4090325961325968}
-  - component: {fileID: 95876707338501060}
   m_Layer: 0
   m_Name: elfFinalBones
   m_TagString: Untagged
@@ -864,24 +863,6 @@ Animator:
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!95 &95876707338501060
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1068873140534874}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 102a745d165864d4490a715124343cc8, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
