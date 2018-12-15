@@ -41,10 +41,7 @@ public class GameManager : MonoBehaviour
 
         requestedGameLength = gameLength;
 
-        // StartCoroutine(TriggerEvent(EventNames.GameStateChanged, GameStates.PlayerJoined, 2.0f));
-
-        // StartCoroutine(TriggerEvent(EventNames.GameStateChanged, GameStates.InProgress, 4.0f));
-    }
+      }
 
     IEnumerator TriggerEvent(string eventName, string payload, float wait)
     {
@@ -145,7 +142,7 @@ public class GameManager : MonoBehaviour
                 scoreboard.enabled = false;
                 break;
             case GameStates.PlayerJoined:
-                if (!gameInProgress)
+                if (!(gameInProgress  || currentGameState == GameStates.GameFinished))
                 {
                     welcome.SetActive(false);
                     instructions.SetActive(true);
